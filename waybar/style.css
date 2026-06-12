@@ -35,7 +35,7 @@ window#waybar {
 }
 
 #custom-launcher:hover {
-    color: #0A0A0A;
+    color: #D61A1F;
 }
 
 #workspaces button {
@@ -82,5 +82,5 @@ window#waybar {
 }
 
 #custom-power:hover {
-    color: #0A0A0A;
+    color: #D61A1F;
 }

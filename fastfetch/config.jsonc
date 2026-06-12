@@ -4,9 +4,8 @@
   "logo": {
     "type": "file",
     "source": "~/.config/fastfetch/ascii.txt",
-    "padding": {
-      "right": 4
-    }
+    "color": { "1": "yellow" },
+    "padding": { "right": 4 }
   },
 
   "display": {
@@ -16,78 +15,74 @@
   "modules": [
     {
       "type": "custom",
-      "format": "⓵ VERNITA GREEN"
+      "format": "\u001b[33m\u001b[9m⓵ Vernita Green\u001b[0m"
     },
     {
       "type": "custom",
-      "format": "   Copperhead"
+      "format": "   \u001b[33m\u001b[9mCopperhead\u001b[0m"
     },
-    {
-      "type": "break"
-    },
+
+    { "type": "break" },
 
     {
       "type": "custom",
-      "format": "⓶ O-REN ISHII"
+      "format": "\u001b[33m\u001b[9m⓶ O-Ren Ishii\u001b[0m"
     },
     {
       "type": "custom",
-      "format": "   Cottonmouth"
+      "format": "   \u001b[33m\u001b[9mCottonmouth\u001b[0m"
     },
-    {
-      "type": "break"
-    },
+
+    { "type": "break" },
 
     {
       "type": "custom",
-      "format": "⓷ BUDD"
+      "format": "\u001b[33m\u001b[9m⓷ Budd\u001b[0m"
     },
     {
       "type": "custom",
-      "format": "   Sidewinder"
+      "format": "   \u001b[33m\u001b[9mSidewinder\u001b[0m"
     },
-    {
-      "type": "break"
-    },
+
+    { "type": "break" },
 
     {
       "type": "custom",
-      "format": "⓸ ELLE DRIVER"
+      "format": "\u001b[33m\u001b[9m⓸ Elle Driver\u001b[0m"
     },
     {
       "type": "custom",
-      "format": "   California Mountain Snake"
+      "format": "   \u001b[33m\u001b[9mCalifornia Mountain Snake\u001b[0m"
     },
-    {
-      "type": "break"
-    },
+
+    { "type": "break" },
 
     {
       "type": "custom",
-      "format": "\u001b[4m⓹ BILL\u001b[24m"
+      "format": "\u001b[38;2;214;26;31m⓹ BILL\u001b[0m"
     },
     {
       "type": "custom",
-      "format": "   Snake Charmer"
+      "format": "   \u001b[38;2;214;26;31mSnake Charmers\u001b[0m"
     },
 
-    {
-      "type": "break"
-    },
-    {
-      "type": "break"
-    },
+    { "type": "break" },
+    { "type": "break" },
+
     {
       "type": "os",
-      "key": ""
+      "key": "",
+      "keyColor": "yellow"
     },
     {
       "type": "packages",
-      "key": "󰏖"
+      "key": "󰏖",
+      "keyColor": "yellow"
     },
     {
       "type": "wm",
-      "key": ""
+      "key": "",
+      "keyColor": "yellow"
     }
   ]
 }

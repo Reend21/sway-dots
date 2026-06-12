@@ -24,7 +24,26 @@ set $red #D61A1F
 
 font pango:NotoSans 16 
 
-### Output configuration
+exec mako
+
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
+set $GTK_THEME Graphite-yellow-Dark
+set $ICON_THEME Vimix-amber-dark
+set $CURSOR_THEME Graphite-dark-cursors 
+
+exec_always {
+    gsettings set org.gnome.desktop.interface gtk-theme "$GTK_THEME"
+    gsettings set org.gnome.desktop.interface icon-theme "$ICON_THEME"
+    gsettings set org.gnome.desktop.interface cursor-theme "$CURSOR_THEME"
+    gsettings set org.gnome.desktop.interface cursor-size 24
+    gsettings set org.gnome.desktop.interface font-name 'Noto Sans 11'
+}
+
+seat * xcursor_theme Graphite-dark-cursors 24
+
+### wallpaper
 output * bg /home/reend/killbill.png fill
 
 ### Windows

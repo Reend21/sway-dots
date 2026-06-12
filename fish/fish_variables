@@ -1,5 +1,10 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR --export QT_QPA_PLATFORM:wayland\x3bxcb
+SETUVAR --export QT_QPA_PLATFORMTHEME:qt6ct
+SETUVAR --export XDG_CURRENT_DESKTOP:sway
+SETUVAR --export --path XDG_DATA_DIRS:/home/reend/\x2elocal/share/flatpak/exports/share\x1e/var/lib/flatpak/exports/share\x1e/home/reend/\x2elocal/share\x1e/usr/local/share\x1e/usr/share
+SETUVAR --export XDG_SESSION_DESKTOP:sway
 SETUVAR __fish_initialized:4300
 SETUVAR fish_color_autosuggestion:555500
 SETUVAR fish_color_command:FFD700

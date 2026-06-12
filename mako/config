@@ -1,0 +1,53 @@
+# ~/.config/mako/config
+
+# GENERAL
+font=Bebas Neue 12
+layer=overlay
+
+width=420
+height=180
+
+padding=14
+margin=16
+
+border-size=3
+border-radius=0
+
+default-timeout=5000
+ignore-timeout=0
+
+anchor=bottom-right
+
+max-visible=5
+
+icons=1
+markup=1
+
+# COLORS
+background-color=#000000FF
+text-color=#FFFFFFFF
+border-color=#FFD100FF
+
+# Progress bars
+progress-color=over #FFD100FF
+
+format=<b>%s</b>\n%b
+
+# NORMAL
+[urgency=normal]
+background-color=#000000FF
+text-color=#FFFFFFFF
+border-color=#FFD100FF
+
+# LOW
+[urgency=low]
+background-color=#000000FF
+text-color=#BFBFBFFF
+border-color=#666666FF
+
+# CRITIC
+[urgency=high]
+background-color=#000000FF
+text-color=#FF3030FF
+border-color=#FF3030FF
+default-timeout=0

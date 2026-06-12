@@ -1,9 +1,9 @@
 #!/bin/bash
 
-chosen=$(printf " Shutdown\n󰜉 Reboot\n󰑓 Reload Sway\n󰍃 Logout" | \
-fuzzel --dmenu)
---prompt "  " \
---line-height 22)
+chosen=$(printf "   Shutdown\n󰜉  Reboot\n󰑓  Reload Sway\n󰍃  Logout" | \
+fuzzel --dmenu \
+       --prompt "My baby shut me down..  " \
+       --line-height 24)
 
 case "$chosen" in
     *Shutdown)

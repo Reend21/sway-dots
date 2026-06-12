@@ -1,0 +1,93 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+
+  "logo": {
+    "type": "file",
+    "source": "~/.config/fastfetch/ascii.txt",
+    "padding": {
+      "right": 4
+    }
+  },
+
+  "display": {
+    "separator": " "
+  },
+
+  "modules": [
+    {
+      "type": "custom",
+      "format": "⓵ VERNITA GREEN"
+    },
+    {
+      "type": "custom",
+      "format": "   Copperhead"
+    },
+    {
+      "type": "break"
+    },
+
+    {
+      "type": "custom",
+      "format": "⓶ O-REN ISHII"
+    },
+    {
+      "type": "custom",
+      "format": "   Cottonmouth"
+    },
+    {
+      "type": "break"
+    },
+
+    {
+      "type": "custom",
+      "format": "⓷ BUDD"
+    },
+    {
+      "type": "custom",
+      "format": "   Sidewinder"
+    },
+    {
+      "type": "break"
+    },
+
+    {
+      "type": "custom",
+      "format": "⓸ ELLE DRIVER"
+    },
+    {
+      "type": "custom",
+      "format": "   California Mountain Snake"
+    },
+    {
+      "type": "break"
+    },
+
+    {
+      "type": "custom",
+      "format": "\u001b[4m⓹ BILL\u001b[24m"
+    },
+    {
+      "type": "custom",
+      "format": "   Snake Charmer"
+    },
+
+    {
+      "type": "break"
+    },
+    {
+      "type": "break"
+    },
+    {
+      "type": "os",
+      "key": ""
+    },
+    {
+      "type": "packages",
+      "key": "󰏖"
+    },
+    {
+      "type": "wm",
+      "key": ""
+    }
+  ]
+}

@@ -47,6 +47,182 @@ echo -e "${NC}"
 echo -e "${CYAN}  Graphite Yellow Dark · Vimix Amber Icons · Graphite Cursors${NC}"
 echo -e "${CYAN}  ──────────────────────────────────────────────────────────${NC}\n"
 
+# ══════════════════════════════════════════════════════════════════════
+#  DAĞITIM SEÇİMİ & PAKET KURULUMU
+# ══════════════════════════════════════════════════════════════════════
+
+# ── Otomatik dağıtım algılama ────────────────────────────────────────
+detect_distro() {
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        case "$ID" in
+            opensuse*|suse*) echo "opensuse" ;;
+            arch|manjaro|endeavouros|garuda) echo "arch" ;;
+            fedora|nobara) echo "fedora" ;;
+            debian|ubuntu|linuxmint|pop|zorin|elementary) echo "debian" ;;
+            *) echo "unknown" ;;
+        esac
+    else
+        echo "unknown"
+    fi
+}
+
+DETECTED_DISTRO="$(detect_distro)"
+
+# ── Dağıtım seçim menüsü ────────────────────────────────────────────
+echo -e "${BOLD}  Dağıtım seçin (paket yöneticisi):${NC}"
+echo ""
+
+if [ "$DETECTED_DISTRO" != "unknown" ]; then
+    info "Algılanan dağıtım: ${BOLD}${DETECTED_DISTRO}${NC}"
+    echo ""
+fi
+
+echo -e "    ${YELLOW}1)${NC} openSUSE      ${CYAN}(zypper)${NC}"
+echo -e "    ${YELLOW}2)${NC} Arch Linux    ${CYAN}(pacman)${NC}"
+echo -e "    ${YELLOW}3)${NC} Fedora        ${CYAN}(dnf)${NC}"
+echo -e "    ${YELLOW}4)${NC} Debian/Ubuntu ${CYAN}(apt)${NC}"
+echo -e "    ${YELLOW}5)${NC} Paket kurulumunu atla"
+echo ""
+
+read -rp "  Seçiminiz [1-5]: " distro_choice
+
+case "$distro_choice" in
+    1) DISTRO="opensuse" ;;
+    2) DISTRO="arch" ;;
+    3) DISTRO="fedora" ;;
+    4) DISTRO="debian" ;;
+    5) DISTRO="skip" ;;
+    *)
+        if [ "$DETECTED_DISTRO" != "unknown" ]; then
+            DISTRO="$DETECTED_DISTRO"
+            info "Algılanan dağıtım kullanılıyor: $DISTRO"
+        else
+            warn "Geçersiz seçim, paket kurulumu atlanıyor"
+            DISTRO="skip"
+        fi
+        ;;
+esac
+
+# ── Paket kurulumu ───────────────────────────────────────────────────
+if [ "$DISTRO" != "skip" ]; then
+    section "Paket Kurulumu ($DISTRO)"
+
+    case "$DISTRO" in
+        opensuse)
+            info "zypper ile paketler kuruluyor..."
+            sudo zypper install -y --no-recommends \
+                sway swaybg swaylock swayidle swaynag \
+                kitty \
+                waybar \
+                fish \
+                mako \
+                fuzzel \
+                fastfetch \
+                brightnessctl \
+                playerctl \
+                grim slurp \
+                wl-clipboard \
+                qt5ct qt6ct \
+                kvantum-manager \
+                pipewire-pulseaudio \
+                glib2-tools \
+                gtk3-tools \
+                xdg-desktop-portal-wlr \
+                starship \
+                || warn "Bazı paketler kurulamadı, devam ediliyor..."
+            success "openSUSE paketleri kuruldu"
+            ;;
+
+        arch)
+            info "pacman ile paketler kuruluyor..."
+            sudo pacman -S --needed --noconfirm \
+                sway swaybg swaylock swayidle \
+                kitty \
+                waybar \
+                fish \
+                mako \
+                fuzzel \
+                fastfetch \
+                brightnessctl \
+                playerctl \
+                grim slurp \
+                wl-clipboard \
+                qt5ct qt6ct \
+                kvantum \
+                pipewire-pulse \
+                glib2 \
+                gtk-update-icon-cache \
+                xdg-desktop-portal-wlr \
+                starship \
+                || warn "Bazı paketler kurulamadı, devam ediliyor..."
+            success "Arch Linux paketleri kuruldu"
+            ;;
+
+        fedora)
+            info "dnf ile paketler kuruluyor..."
+            sudo dnf install -y \
+                sway swaybg swaylock swayidle \
+                kitty \
+                waybar \
+                fish \
+                mako \
+                fuzzel \
+                fastfetch \
+                brightnessctl \
+                playerctl \
+                grim slurp \
+                wl-clipboard \
+                qt5ct qt6ct \
+                kvantum \
+                pipewire-pulseaudio \
+                glib2 \
+                gtk-update-icon-cache \
+                xdg-desktop-portal-wlr \
+                starship \
+                || warn "Bazı paketler kurulamadı, devam ediliyor..."
+            success "Fedora paketleri kuruldu"
+            ;;
+
+        debian)
+            info "apt ile paketler kuruluyor..."
+            sudo apt update
+            sudo apt install -y \
+                sway swaybg swaylock swayidle \
+                kitty \
+                waybar \
+                fish \
+                mako-notifier \
+                fuzzel \
+                fastfetch \
+                brightnessctl \
+                playerctl \
+                grim slurp \
+                wl-clipboard \
+                qt5ct \
+                kvantum \
+                pipewire-pulse \
+                libglib2.0-bin \
+                gtk-update-icon-cache \
+                xdg-desktop-portal-wlr \
+                || warn "Bazı paketler kurulamadı, devam ediliyor..."
+
+            # qt6ct ve starship Debian depolarında olmayabilir
+            if ! command -v qt6ct &>/dev/null; then
+                warn "qt6ct Debian depolarında bulunamadı, manuel kurulum gerekebilir"
+            fi
+            if ! command -v starship &>/dev/null; then
+                info "Starship kuruluyor (resmi script)..."
+                curl -sS https://starship.rs/install.sh | sh -s -- -y \
+                    || warn "Starship kurulamadı, manuel kurulum: https://starship.rs"
+            fi
+            success "Debian/Ubuntu paketleri kuruldu"
+            ;;
+    esac
+
+    echo ""
+fi
+
 # ── Yedek dizini oluştur ─────────────────────────────────────────────
 create_backup() {
     local target="$1"
@@ -470,6 +646,5 @@ echo -e "${CYAN}  Yedekler:${NC} ${BACKUP_DIR}"
 echo ""
 echo -e "${YELLOW}  Sonraki adımlar:${NC}"
 echo -e "    1. ${BOLD}swaymsg reload${NC} ile sway'ı yeniden yükleyin"
-echo -e "    2. Kvantum kurulu değilse: ${BOLD}sudo zypper install kvantum-manager${NC}"
-echo -e "    3. Oturumu kapatıp açarak tüm değişiklikleri uygulayın"
+echo -e "    2. Oturumu kapatıp açarak tüm değişiklikleri uygulayın"
 echo ""

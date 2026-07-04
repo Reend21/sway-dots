@@ -72,6 +72,49 @@ link_config() {
 }
 
 # ══════════════════════════════════════════════════════════════════════
+#  0. FONTLAR
+# ══════════════════════════════════════════════════════════════════════
+section "Font Kurulumu"
+
+FONT_SRC="${DOTFILES_DIR}/fonts"
+FONT_DST="${HOME}/.local/share/fonts"
+
+if [ -d "$FONT_SRC" ]; then
+    mkdir -p "$FONT_DST"
+    font_count=0
+
+    for font_dir in "$FONT_SRC"/*/; do
+        [ -d "$font_dir" ] || continue
+        dir_name="$(basename "$font_dir")"
+        dst_dir="${FONT_DST}/${dir_name}"
+
+        create_backup "$dst_dir"
+        mkdir -p "$dst_dir"
+
+        for font_file in "$font_dir"*.ttf "$font_dir"*.otf "$font_dir"*.TTF "$font_dir"*.OTF; do
+            [ -f "$font_file" ] || continue
+            cp "$font_file" "$dst_dir/"
+            font_count=$((font_count + 1))
+        done
+
+        if [ "$font_count" -gt 0 ]; then
+            success "${dir_name} fontları kuruldu → $dst_dir"
+        fi
+    done
+
+    # Font cache güncelle
+    if command -v fc-cache &>/dev/null; then
+        info "Font cache güncelleniyor..."
+        fc-cache -f 2>/dev/null
+        success "Font cache güncellendi ($font_count font dosyası kuruldu)"
+    else
+        warn "fc-cache bulunamadı, font cache manuel güncellenmeli: fc-cache -f"
+    fi
+else
+    warn "Fonts dizini bulunamadı: $FONT_SRC"
+fi
+
+# ══════════════════════════════════════════════════════════════════════
 #  1. CURSOR TEMASI
 # ══════════════════════════════════════════════════════════════════════
 section "Cursor Teması: ${CURSOR_THEME}"
@@ -299,6 +342,20 @@ if [ -d "$SWAY_SRC" ]; then
     done
 fi
 
+# ── Wallpapers ───────────────────────────────────────────────────────
+WP_SRC="${DOTFILES_DIR}/wallpapers"
+WP_DST="${CONFIG_DIR}/sway/wallpapers"
+
+if [ -d "$WP_SRC" ]; then
+    create_backup "$WP_DST"
+    mkdir -p "$WP_DST"
+    cp "$WP_SRC"/*.{jpg,jpeg,png,webp} "$WP_DST/" 2>/dev/null || true
+    wp_count=$(find "$WP_DST" -type f \( -name '*.jpg' -o -name '*.jpeg' -o -name '*.png' -o -name '*.webp' \) | wc -l)
+    success "${wp_count} wallpaper kopyalandı → $WP_DST"
+else
+    warn "Wallpaper dizini bulunamadı: $WP_SRC"
+fi
+
 # ── Waybar ───────────────────────────────────────────────────────────
 if [ -d "${DOTFILES_DIR}/waybar" ]; then
     link_config "${DOTFILES_DIR}/waybar" "${CONFIG_DIR}/waybar"
@@ -402,9 +459,12 @@ echo -e "    ${BOLD}Icon Paketi:${NC}    ${ICON_THEME_DARK} / ${ICON_THEME_LIGHT
 echo -e "    ${BOLD}Cursor Teması:${NC}  ${CURSOR_THEME}"
 echo -e "    ${BOLD}Kvantum:${NC}        GraphiteDarkYellow (Qt uygulamaları)"
 echo ""
+echo -e "${CYAN}  Kurulan fontlar:${NC}"
+echo -e "    Iosevka Nerd Font · JetBrainsMono · Noto Sans · Noto Sans JP · Bebas Neue"
+echo ""
 echo -e "${CYAN}  Kurulan yapılandırmalar:${NC}"
 echo -e "    sway · waybar · kitty · fuzzel · mako · fastfetch · fish"
-echo -e "    qt5ct · qt6ct · GTK 2.0/3.0/4.0"
+echo -e "    qt5ct · qt6ct · GTK 2.0/3.0/4.0 · wallpapers"
 echo ""
 echo -e "${CYAN}  Yedekler:${NC} ${BACKUP_DIR}"
 echo ""

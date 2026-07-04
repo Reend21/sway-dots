@@ -9,6 +9,9 @@ set $right l
 set $term kitty
 set $menu fuzzel
 
+output eDP-1 mode 1920x1080
+output Virtual-1 mode 1920x1080
+
 input "type:keyboard" {
 	xkb_layout tr
 	xkb_variant ""
@@ -52,7 +55,7 @@ gaps inner 5
 gaps outer 5
 smart_gaps onn
 # Sınıf                 Kenarlık ArkaPlan Metin   Gösterge AltKenarlık
-client.focused          $black $yellow $white $yellow $black
+client.focused          $yellow $yellow $white $yellow $yellow
 client.focused_inactive $white $yellow $white $red $black
 client.unfocused        $yellow2 $yellow $white $red $black
 client.urgent           $red $yellow $white $red $black

@@ -44,17 +44,7 @@ exec_always {
 seat * xcursor_theme Graphite-dark-cursors 24
 
 ### wallpaper
-set $wp1 ~/.config/sway/wallpapers/1.jpg
-set $wp2 ~/.config/sway/wallpapers/2.png
-set $wp3 ~/.config/sway/wallpapers/3.jpg
-set $wp4 ~/.config/sway/wallpapers/4.jpg
-exec_always {
-    if [ -f "$wp1" ]; then swaymsg "output * bg $wp1 fill"; \
-    elif [ -f "$wp2" ]; then swaymsg "output * bg $wp2 fill"; \
-    elif [ -f "$wp3" ]; then swaymsg "output * bg $wp3 fill"; \
-    elif [ -f "$wp4" ]; then swaymsg "output * bg $wp4 fill"; \
-    fi
-}
+exec_always sh -c 'for wp in 1.jpg 2.png 3.jpg 4.jpg; do p="$HOME/.config/sway/wallpapers/$wp"; if [ -f "$p" ]; then swaymsg "output * bg \"$p\" fill"; break; fi; done'
 
 ### Windows
 default_border pixel 6

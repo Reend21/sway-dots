@@ -21,6 +21,8 @@ window#waybar {
 #battery,
 #tray,
 #custom-launcher,
+#custom-screenshot,
+#custom-clipboard,
 #custom-power {
     margin: 6px 0;
     padding: 0 14px;
@@ -35,7 +37,9 @@ window#waybar {
     font-size: 18px;
 }
 
-#custom-launcher:hover {
+#custom-launcher:hover,
+#custom-screenshot:hover,
+#custom-clipboard:hover {
     color: #D61A1F;
 }
 

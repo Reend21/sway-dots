@@ -7,7 +7,9 @@
     "modules-left": [
         "custom/launcher",
         "sway/workspaces",
-        "sway/mode"
+        "sway/mode",
+        "custom/screenshot",
+        "custom/clipboard"
     ],
 
     "modules-center": [
@@ -73,7 +75,7 @@
 
     "network": {
         "format-wifi": "󰖩  {essid}",
-        "format-ethernet": "󰈀  {ipaddr}",
+        "format-ethernet": "󰈀",
         "format-disconnected": "󰖪  Offline",
         "tooltip": true
     },
@@ -128,5 +130,19 @@
     "format": "⏻",
     "tooltip": false,
     "on-click": "~/.config/fuzzel/powermenu.sh"
+},
+
+"custom/screenshot": {
+    "format": "󰹑",
+    "tooltip": true,
+    "tooltip-format": "Ekran Alıntısı",
+    "on-click": "grim -g \"$(slurp)\" - | swappy -f -"
+},
+
+"custom/clipboard": {
+    "format": "󰅍",
+    "tooltip": true,
+    "tooltip-format": "Pano Yöneticisi (Clipse)",
+    "on-click": "kitty --class clipse -e clipse"
 }
 }

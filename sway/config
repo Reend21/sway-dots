@@ -171,6 +171,17 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+#
+# Screenshots:
+#
+bindsym Print exec grim -g "$(slurp)" - | swappy -f -
+
+#
+# Clipboard Manager (Clipse):
+#
+exec clipse -listen
+bindsym $mod+v exec $term --class clipse -e clipse
+
 # Status Bar:
 bar {
 	swaybar_command waybar

@@ -67,12 +67,22 @@ window#waybar {
     color: #F5C518;
 }
 
-#battery.warning {
-    color: #F5C518;
+#cpu,
+#memory,
+#battery {
+    color: #FFFFFF;
 }
 
+#cpu.warning,
+#memory.warning,
+#battery.warning {
+    color: #FFD700;
+}
+
+#cpu.critical,
+#memory.critical,
 #battery.critical {
-    color: #ffffff;
+    color: #D61A1F;
 }
 
 #custom-power {

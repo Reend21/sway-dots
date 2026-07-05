@@ -121,7 +121,8 @@ if [ "$DISTRO" != "skip" ]; then
                 fastfetch \
                 brightnessctl \
                 playerctl \
-                grim slurp \
+                grim slurp swappy \
+                clipse \
                 wl-clipboard \
                 qt5ct qt6ct \
                 kvantum-manager \
@@ -146,7 +147,8 @@ if [ "$DISTRO" != "skip" ]; then
                 fastfetch \
                 brightnessctl \
                 playerctl \
-                grim slurp \
+                grim slurp swappy \
+                clipse \
                 wl-clipboard \
                 qt5ct qt6ct \
                 kvantum \
@@ -171,7 +173,8 @@ if [ "$DISTRO" != "skip" ]; then
                 fastfetch \
                 brightnessctl \
                 playerctl \
-                grim slurp \
+                grim slurp swappy \
+                clipse \
                 wl-clipboard \
                 qt5ct qt6ct \
                 kvantum \
@@ -197,7 +200,8 @@ if [ "$DISTRO" != "skip" ]; then
                 fastfetch \
                 brightnessctl \
                 playerctl \
-                grim slurp \
+                grim slurp swappy \
+                clipse \
                 wl-clipboard \
                 qt5ct \
                 kvantum \
@@ -571,6 +575,13 @@ if [ -d "${DOTFILES_DIR}/fish" ]; then
     done
 fi
 
+# ── Starship ─────────────────────────────────────────────────────────
+if [ -f "${DOTFILES_DIR}/starship.toml" ]; then
+    create_backup "${CONFIG_DIR}/starship.toml"
+    cp "${DOTFILES_DIR}/starship.toml" "${CONFIG_DIR}/starship.toml"
+    success "Starship config → ${CONFIG_DIR}/starship.toml"
+fi
+
 # ══════════════════════════════════════════════════════════════════════
 #  6. ORTAM DEĞİŞKENLERİ
 # ══════════════════════════════════════════════════════════════════════
@@ -639,7 +650,7 @@ echo -e "${CYAN}  Kurulan fontlar:${NC}"
 echo -e "    Iosevka Nerd Font · JetBrainsMono · Noto Sans · Noto Sans JP · Bebas Neue · Impact"
 echo ""
 echo -e "${CYAN}  Kurulan yapılandırmalar:${NC}"
-echo -e "    sway · waybar · kitty · fuzzel · mako · fastfetch · fish"
+echo -e "    sway · waybar · kitty · fuzzel · mako · fastfetch · fish · starship"
 echo -e "    qt5ct · qt6ct · GTK 2.0/3.0/4.0 · wallpapers"
 echo ""
 echo -e "${CYAN}  Yedekler:${NC} ${BACKUP_DIR}"

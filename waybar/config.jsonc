@@ -76,11 +76,19 @@
     },
 
     "cpu": {
-        "format": ""
+        "format": "  {usage}%",
+        "states": {
+            "warning": 50,
+            "critical": 85
+        }
     },
 
     "memory": {
-        "format": "󰍛"
+        "format": "󰍛  {percentage}%",
+        "states": {
+            "warning": 50,
+            "critical": 85
+        }
     },
 
     "temperature": {
@@ -93,7 +101,7 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{icon}",
+        "format": "{icon}  {capacity}%",
         "format-icons": [
             "󰂎",
             "󰁺",

@@ -142,7 +142,7 @@ if [ "$DISTRO" != "skip" ]; then
                         AUR_HELPER="paru"
                     fi
 
-                    if [ -n "$AUR_HELPER" ]; then
+                    if [ -n "${AUR_HELPER:-}" ]; then
                         for pkg in "${FAILED_PACMAN[@]}"; do
                             $AUR_HELPER -S --noconfirm "$pkg" &>/dev/null || MANUAL_PKGS+=("$pkg")
                         done

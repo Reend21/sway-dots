@@ -1,0 +1,38 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[ KILL ](bold bg:color_yellow fg:color_bg1)\
+[](fg:color_yellow bg:color_red)\
+$directory\
+[](fg:color_red bg:color_bg1)\
+[ BILL ](bold bg:color_bg1 fg:color_yellow)\
+[](fg:color_bg1)\
+$line_break$character"""
+
+palette = 'KILLBILL'
+
+[palettes.KILLBILL]
+color_fg0 = '#E0E0E0'
+color_bg1 = '#0A0A0A'
+color_bg3 = '#111111'
+color_orange = '#8B0000'
+color_red = '#D61A1F'
+color_yellow = '#FFD700'
+
+[directory]
+style = "bold fg:color_fg0 bg:color_red"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Developer" = "󰲋 "
+
+[character]
+disabled = false
+success_symbol = '[刀](bold fg:color_green)'
+error_symbol = '[刀](bold fg:color_red)'

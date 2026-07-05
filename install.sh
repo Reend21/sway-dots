@@ -105,122 +105,89 @@ case "$distro_choice" in
 esac
 
 # ── Paket kurulumu ───────────────────────────────────────────────────
+MANUAL_PKGS=()
+
 if [ "$DISTRO" != "skip" ]; then
     section "Paket Kurulumu ($DISTRO)"
 
     case "$DISTRO" in
         opensuse)
             info "zypper ile paketler kuruluyor..."
-            sudo zypper install -y --no-recommends \
-                sway swaybg swaylock swayidle swaynag \
-                kitty \
-                waybar \
-                fish \
-                mako \
-                fuzzel \
-                fastfetch \
-                brightnessctl \
-                playerctl \
-                grim slurp swappy \
-                clipse \
-                wl-clipboard \
-                qt5ct qt6ct \
-                kvantum-manager \
-                pipewire-pulseaudio \
-                glib2-tools \
-                gtk3-tools \
-                xdg-desktop-portal-wlr \
-                starship \
-                || warn "Bazı paketler kurulamadı, devam ediliyor..."
-            success "openSUSE paketleri kuruldu"
+            PKGS=(sway swaybg swaylock swayidle swaynag kitty waybar fish mako fuzzel fastfetch brightnessctl playerctl grim slurp swappy clipse calcure wl-clipboard qt5ct qt6ct kvantum-manager pipewire-pulseaudio glib2-tools gtk3-tools xdg-desktop-portal-wlr starship)
+            if ! sudo zypper install -y --no-recommends "${PKGS[@]}" &>/dev/null; then
+                warn "Toplu kurulumda hata oluştu, paketler tek tek deneniyor..."
+                for pkg in "${PKGS[@]}"; do
+                    sudo zypper install -y --no-recommends "$pkg" &>/dev/null || MANUAL_PKGS+=("$pkg")
+                done
+            fi
+            success "openSUSE paketleri kurulu (Hatalı olanlar ayrıldı)"
             ;;
 
         arch)
             info "pacman ile paketler kuruluyor..."
-            sudo pacman -S --needed --noconfirm \
-                sway swaybg swaylock swayidle \
-                kitty \
-                waybar \
-                fish \
-                mako \
-                fuzzel \
-                fastfetch \
-                brightnessctl \
-                playerctl \
-                grim slurp swappy \
-                clipse \
-                wl-clipboard \
-                qt5ct qt6ct \
-                kvantum \
-                pipewire-pulse \
-                glib2 \
-                gtk-update-icon-cache \
-                xdg-desktop-portal-wlr \
-                starship \
-                || warn "Bazı paketler kurulamadı, devam ediliyor..."
-            success "Arch Linux paketleri kuruldu"
+            PKGS=(sway swaybg swaylock swayidle kitty waybar fish mako fuzzel fastfetch brightnessctl playerctl grim slurp swappy clipse calcure wl-clipboard qt5ct qt6ct kvantum pipewire-pulse glib2 gtk-update-icon-cache xdg-desktop-portal-wlr starship)
+            
+            if ! sudo pacman -S --needed --noconfirm "${PKGS[@]}" &>/dev/null; then
+                warn "Pacman ile toplu kurulumda hata, eksik paketler tek tek deneniyor..."
+                FAILED_PACMAN=()
+                for pkg in "${PKGS[@]}"; do
+                    sudo pacman -S --needed --noconfirm "$pkg" &>/dev/null || FAILED_PACMAN+=("$pkg")
+                done
+                
+                if [ ${#FAILED_PACMAN[@]} -gt 0 ]; then
+                    info "AUR üzerinden eksik paketler deneniyor: ${FAILED_PACMAN[*]}"
+                    if command -v yay &>/dev/null; then
+                        AUR_HELPER="yay"
+                    elif command -v paru &>/dev/null; then
+                        AUR_HELPER="paru"
+                    fi
+
+                    if [ -n "$AUR_HELPER" ]; then
+                        for pkg in "${FAILED_PACMAN[@]}"; do
+                            $AUR_HELPER -S --noconfirm "$pkg" &>/dev/null || MANUAL_PKGS+=("$pkg")
+                        done
+                    else
+                        warn "yay veya paru bulunamadı, AUR kullanılamıyor."
+                        MANUAL_PKGS+=("${FAILED_PACMAN[@]}")
+                    fi
+                fi
+            fi
+            success "Arch Linux paketleri kurulu (Hatalı olanlar ayrıldı)"
             ;;
 
         fedora)
             info "dnf ile paketler kuruluyor..."
-            sudo dnf install -y \
-                sway swaybg swaylock swayidle \
-                kitty \
-                waybar \
-                fish \
-                mako \
-                fuzzel \
-                fastfetch \
-                brightnessctl \
-                playerctl \
-                grim slurp swappy \
-                clipse \
-                wl-clipboard \
-                qt5ct qt6ct \
-                kvantum \
-                pipewire-pulseaudio \
-                glib2 \
-                gtk-update-icon-cache \
-                xdg-desktop-portal-wlr \
-                starship \
-                || warn "Bazı paketler kurulamadı, devam ediliyor..."
-            success "Fedora paketleri kuruldu"
+            PKGS=(sway swaybg swaylock swayidle kitty waybar fish mako fuzzel fastfetch brightnessctl playerctl grim slurp swappy clipse calcure wl-clipboard qt5ct qt6ct kvantum pipewire-pulseaudio glib2 gtk-update-icon-cache xdg-desktop-portal-wlr starship)
+            if ! sudo dnf install -y "${PKGS[@]}" &>/dev/null; then
+                warn "Toplu kurulumda hata oluştu, paketler tek tek deneniyor..."
+                for pkg in "${PKGS[@]}"; do
+                    sudo dnf install -y "$pkg" &>/dev/null || MANUAL_PKGS+=("$pkg")
+                done
+            fi
+            success "Fedora paketleri kurulu (Hatalı olanlar ayrıldı)"
             ;;
 
         debian)
             info "apt ile paketler kuruluyor..."
-            sudo apt update
-            sudo apt install -y \
-                sway swaybg swaylock swayidle \
-                kitty \
-                waybar \
-                fish \
-                mako-notifier \
-                fuzzel \
-                fastfetch \
-                brightnessctl \
-                playerctl \
-                grim slurp swappy \
-                clipse \
-                wl-clipboard \
-                qt5ct \
-                kvantum \
-                pipewire-pulse \
-                libglib2.0-bin \
-                gtk-update-icon-cache \
-                xdg-desktop-portal-wlr \
-                || warn "Bazı paketler kurulamadı, devam ediliyor..."
+            sudo apt update &>/dev/null
+            PKGS=(sway swaybg swaylock swayidle kitty waybar fish mako-notifier fuzzel fastfetch brightnessctl playerctl grim slurp swappy clipse calcure wl-clipboard qt5ct kvantum pipewire-pulse libglib2.0-bin gtk-update-icon-cache xdg-desktop-portal-wlr)
+            if ! sudo apt install -y "${PKGS[@]}" &>/dev/null; then
+                warn "Toplu kurulumda hata oluştu, paketler tek tek deneniyor..."
+                for pkg in "${PKGS[@]}"; do
+                    sudo apt install -y "$pkg" &>/dev/null || MANUAL_PKGS+=("$pkg")
+                done
+            fi
 
-            # qt6ct ve starship Debian depolarında olmayabilir
             if ! command -v qt6ct &>/dev/null; then
-                warn "qt6ct Debian depolarında bulunamadı, manuel kurulum gerekebilir"
+                warn "qt6ct Debian depolarında bulunamadı."
+                MANUAL_PKGS+=("qt6ct")
             fi
             if ! command -v starship &>/dev/null; then
                 info "Starship kuruluyor (resmi script)..."
-                curl -sS https://starship.rs/install.sh | sh -s -- -y \
-                    || warn "Starship kurulamadı, manuel kurulum: https://starship.rs"
+                curl -sS https://starship.rs/install.sh | sh -s -- -y &>/dev/null \
+                    || MANUAL_PKGS+=("starship")
             fi
-            success "Debian/Ubuntu paketleri kuruldu"
+            success "Debian/Ubuntu paketleri kurulu (Hatalı olanlar ayrıldı)"
             ;;
     esac
 
@@ -655,6 +622,14 @@ echo -e "    qt5ct · qt6ct · GTK 2.0/3.0/4.0 · wallpapers"
 echo ""
 echo -e "${CYAN}  Yedekler:${NC} ${BACKUP_DIR}"
 echo ""
+
+if [ ${#MANUAL_PKGS[@]} -gt 0 ]; then
+    echo -e "${RED}${BOLD}  [!] DİKKAT: AŞAĞIDAKİ PAKETLER KURULAMADI VEYA DEPOLARDA BULUNAMADI!${NC}"
+    echo -e "${RED}  Lütfen bu paketleri paket yöneticiniz, AUR (Arch) veya kaynak kodundan manuel kurun:${NC}"
+    echo -e "    ${BOLD}${MANUAL_PKGS[*]}${NC}"
+    echo ""
+fi
+
 echo -e "${YELLOW}  Sonraki adımlar:${NC}"
 echo -e "    1. ${BOLD}swaymsg reload${NC} ile sway'ı yeniden yükleyin"
 echo -e "    2. Oturumu kapatıp açarak tüm değişiklikleri uygulayın"

@@ -50,14 +50,17 @@
     },
 
     "clock": {
-        "format": "  {:%H:%M}",
+        "format": "{:%H:%M}",
         "tooltip-format": "<big>{:%Y %B %d}</big>\n<tt>{calendar}</tt>",
-        "interval": 1
+        "interval": 1,
+        "on-click": "kitty --class calcure -e calcure"
     },
 
     "pulseaudio": {
         "format": "{icon}",
         "format-muted": "󰝟",
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-click-right": "pavucontrol",
         "format-icons": {
             "default": [
                 "󰕿",
@@ -69,9 +72,9 @@
     },
 
     "network": {
-        "format-wifi": "󰖩",
-        "format-ethernet": "󰈀",
-        "format-disconnected": "󰖪",
+        "format-wifi": "󰖩  {essid}",
+        "format-ethernet": "󰈀  {ipaddr}",
+        "format-disconnected": "󰖪  Offline",
         "tooltip": true
     },
 

@@ -177,6 +177,11 @@ bindsym $mod+r mode "resize"
 bindsym Print exec grim -g "$(slurp)" - | swappy -f -
 
 #
+# Floating popups:
+#
+for_window [app_id="calcure"] floating enable, resize set 800 600
+
+#
 # Clipboard Manager (Clipse):
 #
 exec clipse -listen

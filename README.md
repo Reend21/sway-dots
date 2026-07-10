@@ -1,5 +1,3 @@
-<div align="center">
-
 <img src="Sway.png" alt="Sway" width="128" height="128">
 
 # Sway Dots

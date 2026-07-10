@@ -24,10 +24,10 @@ Placeholder
 
 # Installation
 ```sh
-    git clone https://github.com/Reend21/sway-dots.git
-    cd sway-dots
-    sudo chmod +x install.sh
-    ./install.sh
+git clone https://github.com/Reend21/sway-dots.git
+cd sway-dots
+sudo chmod +x install.sh
+./install.sh
 ```
 
 Then, follow the insatllation steps. (choose the right distribution.)

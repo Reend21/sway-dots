@@ -1,0 +1,41 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                      cava configuration                          ║
+# ║                 Custom Yellow Theme for sway-dots                ║
+# ╚══════════════════════════════════════════════════════════════════╝
+
+[general]
+# Accept latency trade-off for smoother animation
+framerate = 60
+
+# Number of bars. 0 = auto.
+bars = 0
+
+# Bar width and spacing in pixels.
+bar_width = 3
+bar_spacing = 1
+
+[input]
+# Automatic input method detection (works great with PipeWire/PulseAudio)
+# method = pulse
+# source = auto
+
+[output]
+# Output method. 'ncurses' is default, 'noncurses' is also good.
+method = ncurses
+
+[color]
+# Use a beautiful gradient of yellow shades from the dots config
+gradient = 1
+
+gradient_color_1 = '#F8B71D'
+gradient_color_2 = '#F9C31A'
+gradient_color_3 = '#FCD612'
+gradient_color_4 = '#FCD612'
+gradient_color_5 = '#F9C31A'
+gradient_color_6 = '#F8B71D'
+
+[smoothing]
+# Enable monstercat smoothing for a cleaner visual look
+monstercat = 1
+waves = 0
+noise_reduction = 77

@@ -113,7 +113,7 @@ if [ "$DISTRO" != "skip" ]; then
     case "$DISTRO" in
         opensuse)
             info "zypper ile paketler kuruluyor..."
-            PKGS=(sway swaybg swaylock swayidle swaynag kitty waybar fish mako fuzzel fastfetch brightnessctl playerctl grim slurp swappy clipse calcure wl-clipboard qt5ct qt6ct kvantum-manager pipewire-pulseaudio glib2-tools gtk3-tools xdg-desktop-portal-wlr starship)
+            PKGS=(sway swaybg swaylock swayidle swaynag kitty waybar fish mako fuzzel fastfetch brightnessctl playerctl grim slurp swappy clipse calcure wl-clipboard qt5ct qt6ct kvantum-manager pipewire-pulseaudio glib2-tools gtk3-tools xdg-desktop-portal-wlr starship cava)
             if ! sudo zypper install -y --no-recommends "${PKGS[@]}" &>/dev/null; then
                 warn "Toplu kurulumda hata oluştu, paketler tek tek deneniyor..."
                 for pkg in "${PKGS[@]}"; do
@@ -125,7 +125,7 @@ if [ "$DISTRO" != "skip" ]; then
 
         arch)
             info "pacman ile paketler kuruluyor..."
-            PKGS=(sway swaybg swaylock swayidle kitty waybar fish mako fuzzel fastfetch brightnessctl playerctl grim slurp swappy clipse calcure wl-clipboard qt5ct qt6ct kvantum pipewire-pulse glib2 gtk-update-icon-cache xdg-desktop-portal-wlr starship)
+            PKGS=(sway swaybg swaylock swayidle kitty waybar fish mako fuzzel fastfetch brightnessctl playerctl grim slurp swappy clipse calcure wl-clipboard qt5ct qt6ct kvantum pipewire-pulse glib2 gtk-update-icon-cache xdg-desktop-portal-wlr starship cava)
             
             if ! sudo pacman -S --needed --noconfirm "${PKGS[@]}" &>/dev/null; then
                 warn "Pacman ile toplu kurulumda hata, eksik paketler tek tek deneniyor..."
@@ -157,7 +157,7 @@ if [ "$DISTRO" != "skip" ]; then
 
         fedora)
             info "dnf ile paketler kuruluyor..."
-            PKGS=(sway swaybg swaylock swayidle kitty waybar fish mako fuzzel fastfetch brightnessctl playerctl grim slurp swappy clipse calcure wl-clipboard qt5ct qt6ct kvantum pipewire-pulseaudio glib2 gtk-update-icon-cache xdg-desktop-portal-wlr starship)
+            PKGS=(sway swaybg swaylock swayidle kitty waybar fish mako fuzzel fastfetch brightnessctl playerctl grim slurp swappy clipse calcure wl-clipboard qt5ct qt6ct kvantum pipewire-pulseaudio glib2 gtk-update-icon-cache xdg-desktop-portal-wlr starship cava)
             if ! sudo dnf install -y "${PKGS[@]}" &>/dev/null; then
                 warn "Toplu kurulumda hata oluştu, paketler tek tek deneniyor..."
                 for pkg in "${PKGS[@]}"; do
@@ -170,7 +170,7 @@ if [ "$DISTRO" != "skip" ]; then
         debian)
             info "apt ile paketler kuruluyor..."
             sudo apt update &>/dev/null
-            PKGS=(sway swaybg swaylock swayidle kitty waybar fish mako-notifier fuzzel fastfetch brightnessctl playerctl grim slurp swappy clipse calcure wl-clipboard qt5ct kvantum pipewire-pulse libglib2.0-bin gtk-update-icon-cache xdg-desktop-portal-wlr)
+            PKGS=(sway swaybg swaylock swayidle kitty waybar fish mako-notifier fuzzel fastfetch brightnessctl playerctl grim slurp swappy clipse calcure wl-clipboard qt5ct kvantum pipewire-pulse libglib2.0-bin gtk-update-icon-cache xdg-desktop-portal-wlr cava)
             if ! sudo apt install -y "${PKGS[@]}" &>/dev/null; then
                 warn "Toplu kurulumda hata oluştu, paketler tek tek deneniyor..."
                 for pkg in "${PKGS[@]}"; do
@@ -549,6 +549,11 @@ if [ -f "${DOTFILES_DIR}/starship.toml" ]; then
     success "Starship config → ${CONFIG_DIR}/starship.toml"
 fi
 
+# ── Cava ─────────────────────────────────────────────────────────────
+if [ -d "${DOTFILES_DIR}/cava" ]; then
+    link_config "${DOTFILES_DIR}/cava" "${CONFIG_DIR}/cava"
+fi
+
 # ══════════════════════════════════════════════════════════════════════
 #  6. ORTAM DEĞİŞKENLERİ
 # ══════════════════════════════════════════════════════════════════════
@@ -617,7 +622,7 @@ echo -e "${CYAN}  Kurulan fontlar:${NC}"
 echo -e "    Iosevka Nerd Font · JetBrainsMono · Noto Sans · Noto Sans JP · Bebas Neue · Impact"
 echo ""
 echo -e "${CYAN}  Kurulan yapılandırmalar:${NC}"
-echo -e "    sway · waybar · kitty · fuzzel · mako · fastfetch · fish · starship"
+echo -e "    sway · waybar · kitty · fuzzel · mako · fastfetch · fish · starship · cava"
 echo -e "    qt5ct · qt6ct · GTK 2.0/3.0/4.0 · wallpapers"
 echo ""
 echo -e "${CYAN}  Yedekler:${NC} ${BACKUP_DIR}"

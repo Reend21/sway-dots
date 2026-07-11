@@ -12,13 +12,13 @@ BLUE='\033[0;34m'
 MAGENTA='\033[0;35m'
 CYAN='\033[0;36m'
 BOLD='\033[1m'
-NC='\033[0m' # No Color
+NC='\033[0m' 
 
 # Functions
 info()    { echo -e "${BLUE}[INFO]${NC}    $1"; }
 success() { echo -e "${GREEN}[OK]${NC}      $1"; }
-warn()    { echo -e "${YELLOW}[UYARI]${NC}  $1"; }
-error()   { echo -e "${RED}[HATA]${NC}   $1"; }
+warn()    { echo -e "${YELLOW}[WARN]${NC}  $1"; }
+error()   { echo -e "${RED}[ERR]${NC}   $1"; }
 section() { echo -e "\n${MAGENTA}${BOLD}━━━ $1 ━━━${NC}"; }
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -66,11 +66,11 @@ detect_distro() {
 DETECTED_DISTRO="$(detect_distro)"
 
 # Choosing Distro
-echo -e "${BOLD}  Dağıtım seçin (paket yöneticisi):${NC}"
+echo -e "${BOLD}choose your distro:${NC}"
 echo ""
 
 if [ "$DETECTED_DISTRO" != "unknown" ]; then
-    info "Algılanan dağıtım: ${BOLD}${DETECTED_DISTRO}${NC}"
+    info "Detected distro: ${BOLD}${DETECTED_DISTRO}${NC}"
     echo ""
 fi
 
@@ -264,7 +264,7 @@ CURSOR_DST_LOCAL="${HOME}/.local/share/icons/${CURSOR_THEME}"
 CURSOR_DST_SYSTEM="/usr/share/icons/${CURSOR_THEME}"
 
 if [ -d "$CURSOR_SRC" ]; then
-    # Kullanıcı dizinine kur
+    # Install it on user dir
     create_backup "$CURSOR_DST_LOCAL"
     mkdir -p "${HOME}/.local/share/icons"
     rm -rf "$CURSOR_DST_LOCAL"
@@ -323,13 +323,13 @@ done
 # GTK Theme
 section "GTK Theme: ${GTK_THEME}"
 
-# ── 3a. GTK tema dosyalarını kur ─────────────────────────────────────
+# Install GTK Themes
 GTK_THEME_SRC="${DOTFILES_DIR}/gtk-theme/${GTK_THEME}"
 GTK_THEME_DST_LOCAL="${HOME}/.local/share/themes/${GTK_THEME}"
 GTK_THEME_DST_THEMES="${HOME}/.themes/${GTK_THEME}"
 
 if [ -d "$GTK_THEME_SRC" ]; then
-    # ~/.local/share/themes'e kur
+    
     create_backup "$GTK_THEME_DST_LOCAL"
     mkdir -p "${HOME}/.local/share/themes"
     rm -rf "$GTK_THEME_DST_LOCAL"
@@ -378,13 +378,13 @@ if [ -d "$GTK4_SRC" ]; then
     if [ -d "$GTK4_SRC/${GTK_THEME}" ]; then
         create_backup "$GTK4_DST/${GTK_THEME}"
         cp -r "$GTK4_SRC/${GTK_THEME}" "$GTK4_DST/${GTK_THEME}"
-        success "GTK 4.0 tema override → $GTK4_DST/${GTK_THEME}"
+        success "GTK 4.0 theme override → $GTK4_DST/${GTK_THEME}"
     fi
 fi
 
 # GTK 2.0 Configuration
 GTK2RC="${HOME}/.gtkrc-2.0"
-info "GTK 2.0 ayarları yazılıyor..."
+info "GTK 2.0 configurations applying"
 create_backup "$GTK2RC"
 cat > "$GTK2RC" << GTK2_EOF
 gtk-theme-name="${GTK_THEME}"
@@ -410,7 +410,7 @@ theme=GraphiteDarkYellow
 [Applications]
 GraphiteDarkYellow=Graphite dark yellow, Pair with Graphite-yellow-Dark GTK
 KVANTUM_EOF
-success "Kvantum yapılandırması → $KVANTUM_DIR/kvantumrc"
+success "Kvantum configuration → $KVANTUM_DIR/kvantumrc"
 
 if command -v kvantummanager &>/dev/null; then
     success "Kvantum is installed, theme can be applied."
@@ -580,9 +580,9 @@ echo -e "${GREEN}${BOLD}  ✓ Installation Completed${NC}"
 echo -e "${YELLOW}${BOLD}══════════════════════════════════════════════════════════════${NC}"
 echo ""
 echo -e "${CYAN}  Themes Installed:${NC}"
-echo -e "    ${BOLD}GTK Teması:${NC}     ${GTK_THEME}"
-echo -e "    ${BOLD}Icon Paketi:${NC}    ${ICON_THEME_DARK} / ${ICON_THEME_LIGHT}"
-echo -e "    ${BOLD}Cursor Teması:${NC}  ${CURSOR_THEME}"
+echo -e "    ${BOLD}GTK Theme:${NC}     ${GTK_THEME}"
+echo -e "    ${BOLD}Icon Pack:${NC}    ${ICON_THEME_DARK} / ${ICON_THEME_LIGHT}"
+echo -e "    ${BOLD}Cursor Theme:${NC}  ${CURSOR_THEME}"
 echo -e "    ${BOLD}Kvantum:${NC}        GraphiteDarkYellow (QT)"
 echo ""
 echo -e "${CYAN}  Fonts Installed:${NC}"
@@ -592,7 +592,7 @@ echo -e "${CYAN}  Configurations Applied:${NC}"
 echo -e "    sway · waybar · kitty · fuzzel · mako · fastfetch · fish · starship · cava"
 echo -e "    qt5ct · qt6ct · GTK 2.0/3.0/4.0 · wallpapers"
 echo ""
-echo -e "${CYAN}  Yedekler:${NC} ${BACKUP_DIR}"
+echo -e "${CYAN}  Backups:${NC} ${BACKUP_DIR}"
 echo ""
 
 if [ ${#MANUAL_PKGS[@]} -gt 0 ]; then

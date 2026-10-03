@@ -23,6 +23,7 @@ window#waybar {
 #custom-launcher,
 #custom-screenshot,
 #custom-clipboard,
+#custom-media,
 #custom-power {
     margin: 6px 0;
     padding: 0 14px;
@@ -86,6 +87,17 @@ window#waybar {
 #cpu.critical,
 #memory.critical,
 #battery.critical {
+    color: #D61A1F;
+}
+
+#custom-media {
+    color: #F5C518;
+    font-size: 16px;
+    font-style: italic;
+    padding: 0 12px;
+}
+
+#custom-media:hover {
     color: #D61A1F;
 }
 

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# -> Installation Script for my Kill Bill themed Sway dots.                  
+# SwayWM dotfiles installation script by Reend
+# github: Reend21/sway-dots               
 
 set -euo pipefail
 
@@ -324,7 +325,7 @@ done
 section "GTK Theme: ${GTK_THEME}"
 
 # Install GTK Themes
-GTK_THEME_SRC="${DOTFILES_DIR}/gtk-theme/${GTK_THEME}"
+GTK_THEME_SRC="${DOTFILES_DIR}/gtk-3.0/${GTK_THEME}"
 GTK_THEME_DST_LOCAL="${HOME}/.local/share/themes/${GTK_THEME}"
 GTK_THEME_DST_THEMES="${HOME}/.themes/${GTK_THEME}"
 
@@ -370,10 +371,12 @@ GTK4_SRC="${DOTFILES_DIR}/gtk-4.0"
 GTK4_DST="${CONFIG_DIR}/gtk-4.0"
 
 if [ -d "$GTK4_SRC" ]; then
-    create_backup "$GTK4_DST/settings.ini"
-    mkdir -p "$GTK4_DST"
-    cp "$GTK4_SRC/settings.ini" "$GTK4_DST/settings.ini"
-    success "GTK 4.0 settings.ini → $GTK4_DST/settings.ini"
+    if [ -f "$GTK4_SRC/settings.ini" ]; then
+        create_backup "$GTK4_DST/settings.ini"
+        mkdir -p "$GTK4_DST"
+        cp "$GTK4_SRC/settings.ini" "$GTK4_DST/settings.ini"
+        success "GTK 4.0 settings.ini → $GTK4_DST/settings.ini"
+    fi
 
     if [ -d "$GTK4_SRC/${GTK_THEME}" ]; then
         create_backup "$GTK4_DST/${GTK_THEME}"
@@ -493,6 +496,7 @@ fi
 
 if [ -d "${DOTFILES_DIR}/fuzzel" ]; then
     link_config "${DOTFILES_DIR}/fuzzel" "${CONFIG_DIR}/fuzzel"
+    chmod +x "${CONFIG_DIR}/fuzzel/powermenu.sh" 2>/dev/null || true
 fi
 
 if [ -d "${DOTFILES_DIR}/mako" ]; then

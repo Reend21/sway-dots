@@ -18,9 +18,9 @@ input "type:keyboard" {
 } 
 input type:keyboard xkb_numlock enabled
 
-set $yellow #FCD612
+set $yellow #FFD700
 set $yellow2 #F9C31A
-set $yellow #F8B71D
+set $amber #F8B71D
 set $black #000000
 set $white #FFFFFF
 set $red #D61A1F
@@ -53,7 +53,7 @@ exec_always sh -c 'for wp in 1.jpg 2.png 3.jpg 4.jpg; do p="$HOME/.config/sway/w
 default_border pixel 6
 gaps inner 5
 gaps outer 5
-smart_gaps onn
+smart_gaps on
 # Sınıf                 Kenarlık ArkaPlan Metin   Gösterge AltKenarlık
 client.focused          $yellow $yellow $white $yellow $yellow
 client.focused_inactive $white $yellow $white $red $black
@@ -85,7 +85,7 @@ bindsym XF86AudioPause exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86AudioStop exec playerctl stop
-bindsym XF86Search exec bemenu-run
+bindsym XF86Search exec $menu
 
 
 # Moving around:
@@ -180,12 +180,13 @@ bindsym Print exec grim -g "$(slurp)" - | swappy -f -
 # Floating popups:
 #
 for_window [app_id="calcure"] floating enable, resize set 800 600
+for_window [app_id="clipse"] floating enable, resize set 620 500
 
 #
 # Clipboard Manager (Clipse):
 #
 exec clipse -listen
-bindsym $mod+v exec $term --class clipse -e clipse
+bindsym $mod+Shift+v exec $term --class clipse -e clipse
 
 # Status Bar:
 bar {

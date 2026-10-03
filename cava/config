@@ -1,7 +1,5 @@
-# ╔══════════════════════════════════════════════════════════════════╗
-# ║                      cava configuration                          ║
-# ║                 Custom Yellow Theme for sway-dots                ║
-# ╚══════════════════════════════════════════════════════════════════╝
+# cava configuration by Reend
+# github: Reend21/sway-dots
 
 [general]
 # Accept latency trade-off for smoother animation
@@ -24,7 +22,6 @@ bar_spacing = 1
 method = ncurses
 
 [color]
-# Use a beautiful gradient of yellow shades from the dots config
 gradient = 1
 
 gradient_color_1 = '#F8B71D'

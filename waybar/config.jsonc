@@ -17,18 +17,16 @@
     ],
 
     "modules-right": [
+        "custom/media",
         "pulseaudio",
-        "network",
-        "cpu",
         "memory",
-        "temperature",
         "battery",
         "tray",
         "custom/power"
     ],
 
     "custom/launcher": {
-        "format": "花嫁",
+        "format": "menu",
         "tooltip": false,
         "on-click": "fuzzel"
     },
@@ -43,11 +41,11 @@
             "3": "三",
             "4": "四",
             "5": "五",
-	    "6": "六",
+	        "6": "六",
             "7": "七",
             "8": "八",
             "9": "九",
-            "10": "十",
+            "10": "十"
         }
     },
 
@@ -73,32 +71,12 @@
         "tooltip": true
     },
 
-    "network": {
-        "format-wifi": "󰖩  {essid}",
-        "format-ethernet": "󰈀",
-        "format-disconnected": "󰖪  Offline",
-        "tooltip": true
-    },
-
-    "cpu": {
-        "format": "  {usage}%",
-        "states": {
-            "warning": 50,
-            "critical": 85
-        }
-    },
-
     "memory": {
         "format": "󰍛  {percentage}%",
         "states": {
             "warning": 50,
             "critical": 85
         }
-    },
-
-    "temperature": {
-        "critical-threshold": 80,
-        "format": ""
     },
 
     "battery": {
@@ -144,5 +122,19 @@
     "tooltip": true,
     "tooltip-format": "Pano Yöneticisi (Clipse)",
     "on-click": "kitty --class clipse -e clipse"
+},
+
+"custom/media": {
+    "format": "{}",
+    "return-type": "",
+    "max-length": 40,
+    "exec": "playerctl metadata --format '󰎈  {{ artist }} — {{ title }}' 2>/dev/null || echo ''",
+    "exec-if": "playerctl status 2>/dev/null | grep -q Playing",
+    "interval": 3,
+    "on-click": "playerctl play-pause",
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous",
+    "tooltip": true,
+    "tooltip-format": "Media Player Controls"
 }
 }

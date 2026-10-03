@@ -24,7 +24,7 @@ Placeholder
 
 # Installation
 ```sh
-git clone https://github.com/Reend21/sway-dots.git
+git clone --depth 1 https://github.com/Reend21/sway-dots.git
 cd sway-dots
 sudo chmod +x install.sh
 ./install.sh

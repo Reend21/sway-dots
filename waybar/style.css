@@ -6,7 +6,7 @@
 }
 
 window#waybar {
-    background: rgba(10, 10, 10, 0.88);
+    background: rgba(10, 10, 10, 0.95);
     color: #E0E0E0;
     border-bottom: 3px solid #D61A1F;
 }
@@ -29,7 +29,7 @@ window#waybar {
     padding: 0 14px;
     color: #FFD700;
     font-size: 20px;
-    transition: all 0.2s ease;
+    transition: all 0.1s ease;
 }
 
 #custom-launcher {
@@ -49,7 +49,7 @@ window#waybar {
     margin: 4px;
     color: #FFD700;
     font-size: 24px;
-    transition: all 0.2s ease;
+    transition: all 0.1s ease;
 }
 
 #workspaces button:hover {
